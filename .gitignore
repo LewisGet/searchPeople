@@ -1,0 +1,19 @@
+db.sqlite3
+.idea
+.idea/*
+
+# not to upload development setting
+ember/settings.py
+
+# win
+*.DS_Store
+**/.DS_Store
+
+# py and frameworks
+**/__pycache__
+**/migrations
+
+# test
+.coverage
+htmlcov
+htmlcov/*
