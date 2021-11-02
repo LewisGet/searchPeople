@@ -24,3 +24,62 @@ python -m coverage report
 ```sh
 python manage.py test
 ```
+
+# Twitter add entity javascript
+
+```javascript
+/** scroll down to get all data */
+var main = document.querySelector("main");
+
+h1 = document.createElement("h1");
+h1.id = "endScroll";
+linkTag = document.createElement("a");
+linkTag.href = "#endScroll";
+
+main.appendChild(h1);
+main.appendChild(linkTag);
+
+for (var i = 0; i < 30; i++)
+{
+    setTimeout(function(){ linkTag.click(); }, i * 300);
+}
+
+/** user object */
+var user = {
+    "display_name": document.querySelector("main h2").innerText,
+    "twitter_id": window.location.href.replace("https://twitter.com/", "").replace("/following#endScroll", "")
+};
+
+/** connect object */
+var connect_users_table = main.querySelector("section").querySelectorAll("div[data-testid=UserCell]");
+
+var connect_users_object = [];
+
+connect_users_table.forEach(function(user_profile) {
+    connect_users_object.push({
+        "display_name": user_profile.querySelector("span").innerText,
+        "twitter_id": user_profile.querySelector("a").href.replace("https://twitter.com/", "")
+    });
+});
+
+/** create url */
+var url_base = "http://127.0.0.1:8000/add?";
+var url = url_base + "display_name=" + user.display_name + "&";
+url = url + "twitter_id=" + user.twitter_id + "&";
+
+var connects_id = [];
+
+connect_users_object.forEach(function(u) {
+    connects_id.push(u.twitter_id);
+});
+
+var connects_id_str =  connects_id.join(",");
+
+url = url + "connects_id=" + connects_id_str;
+
+addLinkTag = document.createElement("a");
+addLinkTag.href = url;
+addLinkTag.target="_blank";
+document.body.appendChild(addLinkTag);
+addLinkTag.click();
+```
