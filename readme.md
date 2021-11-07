@@ -68,23 +68,25 @@ for (var i = 0; i < 100; i++)
 }
 
 /** create url */
-var url_base = "http://127.0.0.1:8000/add?";
-var url = url_base + "display_name=" + user.display_name + "&";
-url = url + "twitter_id=" + user.twitter_id + "&";
+setTimeout(function() {
+    var url_base = "http://127.0.0.1:8000/add?";
+    var url = url_base + "display_name=" + user.display_name + "&";
+    url = url + "twitter_id=" + user.twitter_id + "&";
 
-var connects_id = [];
+    var connects_id = [];
 
-connect_users_object.forEach(function(u) {
-    connects_id.push(u.twitter_id);
-});
+    connect_users_object.forEach(function(u) {
+        connects_id.push(u.twitter_id);
+    });
 
-var connects_id_str =  connects_id.join(",");
+    var connects_id_str =  connects_id.join(",");
 
-url = url + "connects_id=" + connects_id_str;
+    url = url + "connects_id=" + connects_id_str;
 
-addLinkTag = document.createElement("a");
-addLinkTag.href = url;
-addLinkTag.target="_blank";
-document.body.appendChild(addLinkTag);
-addLinkTag.click();
+    addLinkTag = document.createElement("a");
+    addLinkTag.href = url;
+    addLinkTag.target="_blank";
+    document.body.appendChild(addLinkTag);
+    addLinkTag.click();
+}, i * 500);
 ```
