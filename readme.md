@@ -28,7 +28,27 @@ python manage.py test
 # Twitter add entity javascript
 
 ```javascript
-/** scroll down to get all data */
+/** user object */
+var user = {
+    "display_name": document.querySelector("main h2").innerText,
+    "twitter_id": window.location.href.replace("https://twitter.com/", "").replace("/following#endScroll", "")
+};
+
+/** scroll down to get all connect data */
+var connect_users_object = [];
+
+window.saveConnectData = function() {
+    var connect_users_table = main.querySelector("section").querySelectorAll("div[data-testid=UserCell]");
+
+    connect_users_table.forEach(function(user_profile) {
+        connect_users_object.push({
+            "display_name": user_profile.querySelector("span").innerText,
+            "twitter_id": user_profile.querySelector("a").href.replace("https://twitter.com/", "")
+        });
+        user_profile.setAttribute("data-testid", "has_load");
+    });
+}
+
 var main = document.querySelector("main");
 
 h1 = document.createElement("h1");
@@ -39,28 +59,13 @@ linkTag.href = "#endScroll";
 main.appendChild(h1);
 main.appendChild(linkTag);
 
-for (var i = 0; i < 30; i++)
+for (var i = 0; i < 100; i++)
 {
-    setTimeout(function(){ linkTag.click(); }, i * 300);
+    setTimeout(function(){
+        window.saveConnectData();
+        linkTag.click();
+    }, i * 500);
 }
-
-/** user object */
-var user = {
-    "display_name": document.querySelector("main h2").innerText,
-    "twitter_id": window.location.href.replace("https://twitter.com/", "").replace("/following#endScroll", "")
-};
-
-/** connect object */
-var connect_users_table = main.querySelector("section").querySelectorAll("div[data-testid=UserCell]");
-
-var connect_users_object = [];
-
-connect_users_table.forEach(function(user_profile) {
-    connect_users_object.push({
-        "display_name": user_profile.querySelector("span").innerText,
-        "twitter_id": user_profile.querySelector("a").href.replace("https://twitter.com/", "")
-    });
-});
 
 /** create url */
 var url_base = "http://127.0.0.1:8000/add?";
