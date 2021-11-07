@@ -31,7 +31,7 @@ python manage.py test
 /** user object */
 var user = {
     "display_name": document.querySelector("main h2").innerText,
-    "twitter_id": window.location.href.replace("https://twitter.com/", "").replace("/following#endScroll", "")
+    "twitter_id": window.location.href.replace("https://twitter.com/", "").replace("/following", "").replace("#endScroll", "")
 };
 
 /** scroll down to get all connect data */
