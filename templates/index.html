@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <script>
+    window.mainContent = {};
+    window.mainContent.entities = {{ entities|safe }};
+    window.mainContent.mapping = {{ mapping|safe }};
+    </script>
+    <style type="text/css">
+.link { stroke: green; stroke-linejoin:bevel;}
+.link_error{
+    stroke:red;
+    stroke-linejoin:bevel;
+}
+.nodetext {
+    font: 12px sans-serif;
+    -webkit-user-select:none;
+    -moze-user-select:none;
+    stroke-linejoin:bevel;
+}
+#container{
+    width:800px;
+    height:600px;
+    border:1px solid gray;
+    border-radius:5px;
+    position:relative;
+    margin:20px;
+}
+    </style>
+</head>
+<body>
+    <div id='container' style="min-height:600px;"></div>
+    {% load static %}
+    <script src="{% static 'vendors/TopologyD3.js' %}"></script>
+    <script>
+        topology.addNodes(window.mainContent.entities);
+        topology.addLinks(window.mainContent.mapping);
+        topology.update();
+    </script>
+</body>
+</html>
+

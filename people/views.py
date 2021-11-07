@@ -6,8 +6,9 @@ import json
 # Create your views here.
 
 def index(request):
-    entities = [{"id": i.id, "display_name": i.display_name, "twitter_id": i.twitter_id, "connects": [{"id": centity.id} for centity in i.connects.all()]} for i in Entity.objects.all()]
-    return HttpResponse(json.dumps(entities), content_type="application/json")
+    entities = [{"id": i.id, "display_name": i.display_name, "twitter_id": i.twitter_id} for i in Entity.objects.all()]
+    mapping = [{"id": i.id, "from": i.from_entity_id, "to": i.to_entity_id} for i in Entity.objects.raw("select * from people_entity_connects")]
+    return render(request, "index.html", {'entities': json.dumps(entities), 'mapping': json.dumps(mapping)})
 
 
 def add(request):
